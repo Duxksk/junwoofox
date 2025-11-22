@@ -1,0 +1,47 @@
+name: Build & Release APK
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Find gradlew and build
+        shell: bash
+        run: |
+          GRADLEW_PATH=$(find . -type f -name "gradlew" | head -n 1)
+          echo "Found gradlew at: $GRADLEW_PATH"
+
+          if [ -z "$GRADLEW_PATH" ]; then
+            echo "ERROR: gradlew not found!"
+            exit 1
+          fi
+
+          chmod +x "$GRADLEW_PATH"
+          "$GRADLEW_PATH" assembleRelease
+
+      - name: Find built APKs
+        id: apk
+        run: |
+          FILES=$(find . -type f -path "*/build/outputs/apk/release/*.apk")
+          echo "apk_files=$FILES" >> $GITHUB_OUTPUT
+
+      - name: Upload APK to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.apk.outputs.apk_files }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
