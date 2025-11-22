@@ -1,0 +1,42 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/urlBox"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Enter URL"/>
+
+        <Button
+            android:id="@+id/goBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button android:id="@+id/backBtn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Back"/>
+        <Button android:id="@+id/forwardBtn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Forward"/>
+        <Button android:id="@+id/bookmarkBtn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="★"/>
+        <Button android:id="@+id/shareBtn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Share"/>
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>
